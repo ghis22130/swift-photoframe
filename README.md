@@ -1,97 +1,154 @@
-# 진행 방법
+# 📷PhotoFrame
 
-- 포토프레임에 대한 요구사항을 파악한다.
-- 요구사항에 대한 구현을 완료한 후 자신의 github 아이디에 해당하는 브랜치에 Pull Request(이하 PR)를 통해 코드 리뷰 요청을 한다.
-- 코드 리뷰 피드백에 대한 개선 작업을 하고 다시 PUSH한다.
-- 모든 피드백을 완료하면 다음 단계를 도전하고 앞의 과정을 반복한다.
+## Step01 - Tapped App
 
-# 코드 리뷰 과정
-> 저장소 브랜치에 자신의 github 아이디에 해당하는 브랜치가 존재해야 한다.
->
-> 자신의 github 아이디에 해당하는 브랜치가 있는지 확인한다.
+- 프로젝트 이름을 PhotoFrame으로 지정한다.
 
-1. 자신의 github 아이디에 해당하는 브랜치가 없는 경우 브랜치 생성 요청 채널을 통해 브랜치 생성을 요청한다.
-프로젝트를 자신의 계정으로 fork한다. 저장소 우측 상단의 fork 버튼을 활용한다.
+- TapBar Controller를 추가하고 기존 View Controller는 삭제한다.
 
-2. fork한 프로젝트를 자신의 컴퓨터로 clone한다.
-```
-git clone https://github.com/{본인_아이디}/{저장소 아이디}
-ex) https://github.com/godrm/swift-photoframe
-```
+<img src = "img/step01-01.png" width = "80%">
 
-3. clone한 프로젝트 이동
-```
-cd {저장소 아이디}
-ex) cd swift-photoframe
-```
+<img src = "img/step01-02.png" width = "80%">
 
-4. 본인 아이디로 브랜치를 만들기 위한 checkout
-```
-git checkout -t origin/본인_아이디
-ex) git checkout -t origin/godrm
-```
+<img src = "img/step01-03.png" width = "80%">
 
-5. 기능 구현을 위한 브랜치 생성 (연속번호를 붙여나간다)
-```
-git checkout -b 브랜치이름
-ex) git checkout -b photoframe-step1
-```
+- viewDidLoad() 함수에서 `print("#file, #line, #function, #column")` 코드를 추가하면 콘솔 영역에 무엇이 출력되는지 확인한다.
 
-6. commit
-```
-git status //확인
-git rm 파일명 //삭제된 파일
-git add 파일명(or * 모두) // 추가/변경 파일
-git commit -m "메세지" // 커밋
-```
+<img src = "img/step01-04.png" width = "80%">
 
-7. 본인 원격 저장소에 올리기
-```
-git push --set-upstream origin 브랜치이름
-ex) git push --set-upstream origin photoframe-step1
-```
+  
 
-8. pull request
-	- pull request는 github 서비스에서 진행할 수 있다.
-	- pull request는 original 저장소의 브랜치(자신의 github 아이디)와 앞 단계에서 생성한 브랜치 이름을 기준으로 한다.
+ ### ViewController Class
 
-	```
-	ex) code-squad/swift-photoframe godrm 브랜치 기준 => godrm/swift-photoframe store-step1
-	```
-	
-9. code review 및 push
-	- pull request를 통해 피드백을 받는다.
-	- 코드 리뷰 피드백에 대한 개선 작업을 하고 다시 PUSH한다.
+ ViewController를 사용하여 인터페이스를 관리하고 앱 콘텐츠 탐색을 용이하게합니다.
+ >Manage your interface using view controllers and facilitate navigation around our app's content.
+ **Responsibility (뷰컨트롤러의 책임)**
 
-10. 기본(upstream) 브랜치 전환 및 base 저장소 추가하기(최초 시작하기 단계 한번만 하면 됨)
+ - 주요한 데이터의 변화에 응답으로 뷰들의 컨텐트들을 업데이트 한다.
+ - 뷰들과 함께 사용자와의 대화에 응답한다. - 이벤트 핸들링
+ - 뷰들의 사이즈 재조정과 전반적인 인터페이스의 레이아웃을 관리한다.
+ - 다른 객체(뷰컨트롤러 등)들과 함께 앱을 구성한다.
 
-	```
-	git checkout 본인_아이디
-	git remote add upstream base_저장소_url
+ 	[참고](https://o-o-wl.tistory.com/43)
+ 
+ Content View Controller와 Container View Controller로 구분된다.
 
-	ex) git checkout godrm
-	ex) git remote add upstream https://github.com/code-squad/swift-photoframe.git
-	```
 
-	- 위와 같이 base 저장소 추가한 후 remote 브랜치 목록을 보면 4개가 보여야 한다.
+ ### UITabBar vs UITabBarController
+ - `UITabBar`는 `UIView`를 상속받는다
+ - `UITabBarController`는 `UIViewController`를 상속받는다.
 
-	```
-	git remote -v
-	```
+**관련 클래스**
 
-11. 기본 base 저장소와 sync하기 (PR 보낸 내용을 자신의 기본 저장소와 합치기)
+- UITabBarItem
 
-	```
-	git fetch upstream
-	git rebase upstream/본인_아이디
-	ex) git rebase upstream/godrm
-	```
+## Step02 - IBOutlet
 
-12. 다음 미션을 해결할 경우 [5단계 브랜치 생성]부터 다시 진행
+### 실행 화면
+<img src = "img/step02-01.png" width ="60%">
 
-## 동영상을 통한 코드 리뷰() 를 통해 참고 가능
+### UILabel
 
-- [fork하여 코드 리뷰하기](https://www.youtube.com/watch?v=ZSZoaG0PqLg) 
-- [PR 보내고 다시 PR보낼 때 유의 사항](https://www.youtube.com/watch?v=CbLNbCUsh5c&feature=youtu.be)
+- **Accessing the Text Attributes (텍스트 속성 엑세스)**
 
-## 실습 중 모든 질문은 슬랙 채널에서...
+- **Sizing the Label's Text (레이블 텍스트 크기 조정)**
+
+- **Managing Highlight Values (하이라이트 값 관리)**
+
+- **Drawing a Shadow (그림자 그리기)**
+
+- **Drawing and Positioning Overrides (중첩 그리기 및 배치)**
+
+- **Getting the Layout Constraints (레이아웃 제약 조건 가져오기)**
+
+- **Setting and Getting Attributes (특성 설정 및 가져오기)**
+
+- **Related Types (관련유형)**
+
+[출처](https://roeldowney.tistory.com/74)
+
+### AutoLayout
+
+❗️ AutoLayout을 설정해주지 않으니 storyboard에서 Label을 아무리 정렬해줘도 실행했을 때 정렬이 되지 않은채로 출력된다.
+
+<img src = "img/step02-02.png" width = "60%">
+
+Todo : AutoLayout 설정에 대해 알아보자.
+
+## Step03 - IBAction
+### 실행 영상
+<img src = "img/step03-01.gif" width ="40%">
+
+### IBAction Event
+|Event|	Description|
+|---|---|
+|touchDown|	컨트롤을 누를 때 발생하는 이벤트|
+|touchDownRepeat|	컨트롤을 연속해서 누를 때 발생하는 이벤트|
+|touchDragInside|	컨트롤 내부에서 드래그가 이루어질 때 발생하는 이벤트|
+|touchDragOutside|	컨트롤 외부에서 드래그가 이루어 질 때 발생하는 이벤트|
+|touchDragEnter	|컨트롤이 외부에서 드래그를하며 내부로 드래그를 할 때 발생하는 이벤트|
+|touchDragExit	|컨트롤의 외부로 드래그를 할 때 발생하는 이벤트|
+|touchUpInside	|컨트롤 영역 안쪽에서 터치하고 손을 뗏을 때 발생하는 이벤트|
+|touchUpOutside	|컨트롤 영역 안쪽에서 터치 후 컨트롤 외부에서 손을 뗏을 때 발생하는 이벤트|
+|touchCancel	|컨트롤의 현재 터치를 취소햇을 때 발생하는 시스템이벤트|
+|valueChanged	|컨트롤을 드래깅이나 다른 방법으로 조작해서 값이 변경됐을 때 발생하는 이벤트|
+|primaryActionTriggered	|버튼이 눌릴때|
+|editingDidBegin	|UITextField에서 수정이 시작될 때 발생하는 이벤트 ( 텍스트 필드를 터치했을 때)|
+|editingChanged	|UITextField에서 텍스트가 변경되었을 때 발생하는 이벤트|
+|editingDidEnd	|UITextField에서 수정이 끝났을 때 발생하는 이벤트 (텍스트 필드에서 포커싱이 사라질 때)|
+|editingDidEndOnExit|	UITextField의 편집중에 키보드의 return을 눌렀을 때 발생하는 이벤트|
+|allTouchEvents|	모든 터치 이벤트|
+|allEditingEvents|	UITextField에서 모든 편집 이벤트|
+|applicationReserved|	앱의 사용에 따라 지정할 수 있는 컨트롤 이벤트 값의 범위|
+|systemReserved	|내부 프레임워크 내에서 사용되는 예약된 컨트롤 이벤트 값의 범위|
+|allEvents|	시스템 이벤트를 포함한 모든 이벤트|
+
+[출처](https://o-o-wl.tistory.com/45?category=326739)
+
+### 하나의 버튼 여러액션, 버튼이 여러개일때 하나의 액션?
+
+- 하나의 버튼은 이벤트를 전달할 여러 개의 액션 메소드를 지정할 수 있다!
+
+- 하나의 IBAction에 다수의 Button 또한 등록 할 수 있다. 비슷한 유형의 작업을 하는 버튼들에게 적용하면 효율적으로 사용 할 수 있을 것 같다.
+
+## Step04 - Scene과 Segue
+
+- 스토리보드 구성 요소에 대해 학습하고 새로운 Scene과 Segue를 추가한다.
+
+
+### 실행 영상
+<img src = "img/step04-01.gif" width = "40%">
+
+## Step05 - ViewController 프로그래밍
+
+### 실행 영상
+
+<img src = "img/step05-01.gif" width = "40%">
+
+
+### ❗️ ViewController Life - Cycle
+
+<img src = "img/step05-02.png" width = "80%">
+
+TabBarController는 `viewDidAppear`이 되었지만, FirstViewController는 `viewWillApear()`까지만 완료되고 `viewDidAppear()`은 출력되지 않는다..? 왜그러는지 학습해야한다.
+
+### Segue 제거 후 Code로 ViewController 호출 하기
+`let newVC = self.storyboard?.instantiateViewController(identifier:)` 이때 identifier는 storyboard에 있는 ViewController의 storyboard ID이다. (class 이름이 아니라 따로 지정해줘야한다.)
+- **UIModalPresentationStyle**
+- **UIModalTransitionStyle**
+
+`self.present(nextVC, animated: true)`
+
+## Step06 - Container ViewContatiner
+
+### 실행 영상
+
+<img src = "img/step06-01.gif" width = "40%">
+
+**ViewController Container**
+- Split View Controller
+- TabBar Controller
+- Navigation Controller
+
+### Navigation Controller
+Navigation Controller는 자식 Container들을 스택 형식으로 쌓기 때문에 관련 메소드들이 `push`, `pop`이다.
